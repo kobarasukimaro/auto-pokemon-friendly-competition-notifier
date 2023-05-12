@@ -1,0 +1,54 @@
+service: weekly-notice-tweet
+
+provider:
+  name: aws
+  runtime: python3.8
+  stage: ${opt:stage}
+  profile: ${self:provider.stage}
+  region: ap-northeast-1
+  memorySize: 256
+  logRetentionInDays: 30
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "kms:Decrypt"
+      Resource:
+        - "*"
+    - Effect: "Allow"
+      Action:
+        - "ssm:GetParameter"
+        - "ssm:GetParameters"
+        - "ssm:GetParametersByPath"
+      Resource:
+        - "arn:aws:ssm:${aws:region}:${aws:accountId}:parameter/competition-notifier/twitter/*"
+
+  environment:
+    WeeklyNoticeTweetFunctionName: weekly-notice-tweet
+
+packages:
+  exclude:
+    - node_modules/**
+
+plugins:
+  - serverless-prune-plugin
+  
+custom:
+  prune:
+    automatic: true
+    number: 10
+
+functions:
+  weeklyNoticeTweet:
+    name: ${self:provider.environment.WeeklyNoticeTweetFunctionName}
+    handler: src/weekly_notice_tweet.lambda_handler
+    environment:
+      TWITTER_CONSUMER_KEY: ${ssm:/competition-notifier/twitter/consumer-key~true}
+      TWITTER_CONSUMER_SECRET: ${ssm:/competition-notifier/twitter/consumer-secrets~true}
+      TWITTER_ACCESS_TOKEN: ${ssm:/competition-notifier/twitter/access-token~true}
+      TWITTER_ACCESS_TOKEN_SECRET: ${ssm:/competition-notifier/twitter/consumer-access-token-secrets~true}
+      IS_TWEET: on
+    timeout: 300
+    events:
+      - schedule: 
+          rate: cron(45 3 ? JUL-NOV SAT 2022)
+          enabled: true

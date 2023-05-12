@@ -1,0 +1,2 @@
+tweepy==3.10.0
+twitter-text-parser==2.0.0
