@@ -40,10 +40,10 @@ functions:
     name: ${self:provider.environment.WeeklyNoticeTweetFunctionName}
     handler: src/weekly_notice_tweet.lambda_handler
     environment:
-      TWITTER_CONSUMER_KEY: ${ssm:/competition-notifier/twitter/consumer-key~true}
-      TWITTER_CONSUMER_SECRET: ${ssm:/competition-notifier/twitter/consumer-secrets~true}
-      TWITTER_ACCESS_TOKEN: ${ssm:/competition-notifier/twitter/access-token~true}
-      TWITTER_ACCESS_TOKEN_SECRET: ${ssm:/competition-notifier/twitter/consumer-access-token-secrets~true}
+      TWITTER_CONSUMER_KEY: ${ssm:/competition-notifier/twitter/consumer-key}
+      TWITTER_CONSUMER_SECRET: ${ssm:/competition-notifier/twitter/consumer-secrets}
+      TWITTER_ACCESS_TOKEN: ${ssm:/competition-notifier/twitter/access-token}
+      TWITTER_ACCESS_TOKEN_SECRET: ${ssm:/competition-notifier/twitter/consumer-access-token-secrets}
       IS_TWEET: on
     timeout: 300
     events:
