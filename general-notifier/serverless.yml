@@ -3,8 +3,6 @@ service: weekly-notice-tweet
 provider:
   name: aws
   runtime: python3.8
-  stage: ${opt:stage}
-  profile: ${self:provider.stage}
   region: ap-northeast-1
   memorySize: 256
   logRetentionInDays: 30
