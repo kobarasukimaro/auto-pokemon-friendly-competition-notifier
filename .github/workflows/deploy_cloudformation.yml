@@ -25,4 +25,4 @@ jobs:
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: auto-pokemon-friendly-competition-notifier-common-infra
-          template: ./aws/cloudformation/infra.yml
+          template: ./common-resources/aws/cloudformation/infra.yml
