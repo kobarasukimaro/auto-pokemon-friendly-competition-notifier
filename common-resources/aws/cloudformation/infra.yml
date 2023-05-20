@@ -5,7 +5,7 @@ Resources:
   FriendCompetitionDynamoDBTable:
     Type: 'AWS::DynamoDB::Table'
     Properties:
-      TableName: friend_competition2
+      TableName: friend_competition
       AttributeDefinitions:
         - AttributeName: competition_name
           AttributeType: S
@@ -19,7 +19,7 @@ Resources:
   DailyTweetDynamoDBTable:
     Type: 'AWS::DynamoDB::Table'
     Properties:
-      TableName: daily_tweet2
+      TableName: daily_tweet
       AttributeDefinitions:
         - AttributeName: date
           AttributeType: S
