@@ -7,4 +7,4 @@ COMPETITION_NOTICE_RETWEET_SCHEDULE: "cron(30 23,0-13 * * ? *)"
 ENABLE_COMPETITION_NOTICE_RETWEET_SCHEDULE: true
 
 # ツイートするかどうかのフラグ。する場合はon。しない場合はon以外
-IS_TWEET: off
+IS_TWEET: on
