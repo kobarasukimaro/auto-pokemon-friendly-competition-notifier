@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Auto Pokemon Friendly Competition Notifier Common Infra
+
+Resources:
+  FriendCompetitionDynamoDBTable:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      TableName: friend_competition2
+      AttributeDefinitions:
+        - AttributeName: competition_name
+          AttributeType: S
+      KeySchema:
+        - AttributeName: competition_name
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+      BillingMode: PROVISIONED
+  DailyTweetDynamoDBTable:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      TableName: daily_tweet2
+      AttributeDefinitions:
+        - AttributeName: date
+          AttributeType: S
+      KeySchema:
+        - AttributeName: date
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+      BillingMode: PROVISIONED
