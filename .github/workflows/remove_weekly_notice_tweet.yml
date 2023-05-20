@@ -33,7 +33,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Install Plugin and Deploy
+    - name: Remove sls application
       uses: serverless/github-action@v3.2
       with:
         args: -c "cd ./general-notifier && serverless remove"
