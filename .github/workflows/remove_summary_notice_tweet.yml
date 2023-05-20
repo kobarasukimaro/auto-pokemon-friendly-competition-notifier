@@ -52,4 +52,4 @@ jobs:
       run: npm i -g serverless
 
     - name: remove sls
-      run: serverless plugin install --name serverless-prune-plugin@${{ matrix.sls-prune-plugin-version }} && serverless remove --verbose --force
+      run: serverless plugin install --name serverless-prune-plugin@${{ matrix.sls-prune-plugin-version }} && serverless remove --verbose
