@@ -1,3 +1,35 @@
+# About this repository
+This is the source code of an application that automatically announces information about the Friendly Competition on Twitter. It includes infrastructure code, application code, and CI/CD. By preparing in advance and deploying the infrastructure and application from the workflows in this repository, you can build an automatic tweet for the Friendly Competition. Please proceed in order with the following contents to build it.
+
+# What you can do with this repository
+AWS Lambda automatically reads information about the Friendly Competition managed on Google Spreadsheet and posts it on Twitter. The tweets will look like this:
+
+![スクリーンショット 2023-05-20 20 01 57](https://github.com/kobarasukimaro/auto-pokemon-friendly-competition-notifier/assets/17419944/a91d4b00-6da6-4868-899a-6b0d8bea30ea)
+
+![スクリーンショット 2023-05-20 20 02 33](https://github.com/kobarasukimaro/auto-pokemon-friendly-competition-notifier/assets/17419944/95103dbe-6c05-43aa-ba78-2cba16a22514)
+
+
+# Required services
+- AWS account
+- Google Spreadsheet
+- Twitter account (requires registration on Developer Portal)
+- GitHub account
+
+> **Warning**
+> Please prepare and manage each account by yourself. We cannot take responsibility for any damage or costs incurred due to security leaks.
+
+# Build instructions
+Details will be posted on each page. Be sure to start by preparing the [common-resources](https://github.com/kobarasukimaro/auto-pokemon-friendly-competition-notifier/tree/main/common-resources).
+
+- Build [common-resources](https://github.com/kobarasukimaro/auto-pokemon-friendly-competition-notifier/tree/main/common-resources)
+- Build [general-notifier](https://github.com/kobarasukimaro/auto-pokemon-friendly-competition-notifier/tree/main/general-notifier)
+- Build [competition-notifier](https://github.com/kobarasukimaro/auto-pokemon-friendly-competition-notifier/tree/main/competition-notifier)
+- Build [summary-notifier](https://github.com/kobarasukimaro/auto-pokemon-friendly-competition-notifier/tree/main/summary-notifier)
+
+
+---
+
+
 # このリポジトリについて
 仲間大会の情報をツイッター上で自動でお知らせするアプリケーションのソースコードです。インフラコード、アプリケーションコード、CI/CDを含んでいます。
 事前準備を行い、このリポジトリ内のワークフローからインフラとアプリケーションをデプロイすると仲間大会の自動ツイートを構築できます。
