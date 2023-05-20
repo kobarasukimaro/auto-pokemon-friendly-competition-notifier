@@ -1,4 +1,4 @@
-name: Remove weekly notice tweet
+name: Remove general notice tweet
 
 on:
   workflow_dispatch:

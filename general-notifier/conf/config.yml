@@ -1,2 +1,6 @@
-WEEK_NOTICE_TWEET_SCHEDULE: "cron(0 0 ? * * *)"
-ENABLE_WEEK_NOTICE_TWEET_SCHEDULE: false
+# お知らせツイート設定
+GENERAL_NOTICE_TWEET_SCHEDULE: "cron(0 0 ? * * *)"
+ENABLE_GENERAL_NOTICE_TWEET_SCHEDULE: true
+
+# ツイートするかどうかのフラグ。する場合はon。しない場合はon以外
+IS_TWEET: on

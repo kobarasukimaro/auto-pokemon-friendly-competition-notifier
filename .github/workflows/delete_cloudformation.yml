@@ -1,4 +1,4 @@
-name: Deploy CloudFormation
+name: Delete CloudFormation
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
 jobs:
   deploy-cfn:
     runs-on: ubuntu-latest
-    name: Deploy CloudFormation
+    name: Delete CloudFormation
     defaults:
       run:
         working-directory: common-resources

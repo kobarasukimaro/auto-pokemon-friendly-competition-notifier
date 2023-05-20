@@ -1,4 +1,4 @@
-service: weekly-notice-tweet
+service: general-notice-tweet
 
 provider:
   name: aws
@@ -21,7 +21,7 @@ provider:
         - "arn:aws:ssm:${aws:region}:${aws:accountId}:parameter/competition-notifier/twitter/*"
 
   environment:
-    WeeklyNoticeTweetFunctionName: weekly-notice-tweet
+    GeneralNoticeTweetFunctionName: general-notice-tweet
 
 packages:
   exclude:
@@ -36,24 +36,24 @@ custom:
     number: 10
 
 functions:
-  weeklyNoticeTweet:
-    name: ${self:provider.environment.WeeklyNoticeTweetFunctionName}
-    handler: src/weekly_notice_tweet.lambda_handler
+  generalNoticeTweet:
+    name: ${self:provider.environment.GeneralNoticeTweetFunctionName}
+    handler: src/general_notice_tweet.lambda_handler
     environment:
       TWITTER_CONSUMER_KEY: ${ssm:/competition-notifier/twitter/consumer-key}
       TWITTER_CONSUMER_SECRET: ${ssm:/competition-notifier/twitter/consumer-secrets}
       TWITTER_ACCESS_TOKEN: ${ssm:/competition-notifier/twitter/access-token}
       TWITTER_ACCESS_TOKEN_SECRET: ${ssm:/competition-notifier/twitter/consumer-access-token-secrets}
-      IS_TWEET: on
+      IS_TWEET: ${file(./conf/config.yml):IS_TWEET}
     timeout: 300
     events:
       - schedule:
-          rate: ${file(./conf/config.yml):WEEK_NOTICE_TWEET_SCHEDULE}
-          enabled: ${file(./conf/config.yml):ENABLE_WEEK_NOTICE_TWEET_SCHEDULE}
+          rate: ${file(./conf/config.yml):GENERAL_NOTICE_TWEET_SCHEDULE}
+          enabled: ${file(./conf/config.yml):ENABLE_GENERAL_NOTICE_TWEET_SCHEDULE}
 # ツイートの種類を増やしたい場合はfunctionを追加
-#  weeklyNoticeTweet2:
-#    name: ${self:provider.environment.WeeklyNoticeTweetFunctionName2}
-#    handler: src/weekly_notice_tweet2.lambda_handler
+#  generalNoticeTweet2:
+#    name: ${self:provider.environment.GeneralNoticeTweetFunctionName2}
+#    handler: src/general_notice_tweet2.lambda_handler
 #    environment:
 #      TWITTER_CONSUMER_KEY: ${ssm:/competition-notifier/twitter/consumer-key}
 #      TWITTER_CONSUMER_SECRET: ${ssm:/competition-notifier/twitter/consumer-secrets}
@@ -63,5 +63,5 @@ functions:
 #    timeout: 300
 #    events:
 #      - schedule:
-#          rate: ${file(./conf/config.yml):WEEK_NOTICE_TWEET_SCHEDULE2}
-#          enabled: ${file(./conf/config.yml):ENABLE_WEEK_NOTICE_TWEET_SCHEDULE2}
+#          rate: ${file(./conf/config.yml):GENERAL_NOTICE_TWEET_SCHEDULE2}
+#          enabled: ${file(./conf/config.yml):GENERAL_WEEK_NOTICE_TWEET_SCHEDULE2}

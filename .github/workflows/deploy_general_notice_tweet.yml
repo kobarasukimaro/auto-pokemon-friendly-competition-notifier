@@ -1,4 +1,4 @@
-name: Deploy weekly notice tweet
+name: Deploy general notice tweet
 
 on:
   workflow_dispatch:
