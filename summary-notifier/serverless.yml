@@ -1,0 +1,91 @@
+service: competition-notice-tweet
+
+provider:
+  name: aws
+  ecr:
+    scanOnPush: true
+    images:
+      pokemon-friendly-competition-summary-notifier:
+        path: ./docker/
+
+  region: ap-northeast-1
+  memorySize: 512
+  logRetentionInDays: 30
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:*"
+      Resource:
+        - "*"
+    - Effect: "Allow"
+      Action:
+        - "kms:Decrypt"
+      Resource:
+        - "*"
+    - Effect: "Allow"
+      Action:
+        - "ssm:GetParameter"
+        - "ssm:GetParameters"
+        - "ssm:GetParametersByPath"
+      Resource:
+        - "arn:aws:ssm:${aws:region}:${aws:accountId}:parameter/competition-notifier/twitter/*"
+
+  environment:
+    TodayCompetitionSummaryTweetFunctionName: today-competition-summary-tweet
+    ComingCompetitionTweetFunctionName: coming-competition-summary-tweet
+
+plugins:
+  - serverless-prune-plugin
+  
+custom:
+  prune:
+    automatic: true
+    number: 10
+
+functions:
+  TodayCompetitionSummaryTweet:
+    name: ${self:provider.environment.TodayCompetitionSummaryTweetFunctionName}
+    image:
+      name: pokemon-friendly-competition-summary-notifier
+    description: 今日の大会一覧を画像を添えてツイートする関数
+    environment:
+      SPREAD_SHEET_KEY: ${ssm:/competition-notifier/twitter/spread-sheet-key}
+      GCP_KEY_FILE: gcp_key.json
+      TWITTER_CONSUMER_KEY: ${ssm:/competition-notifier/twitter/consumer-key}
+      TWITTER_CONSUMER_SECRET: ${ssm:/competition-notifier/twitter/consumer-secrets}
+      TWITTER_ACCESS_TOKEN: ${ssm:/competition-notifier/twitter/access-token}
+      TWITTER_ACCESS_TOKEN_SECRET: ${ssm:/competition-notifier/twitter/consumer-access-token-secrets}
+      IS_TWEET: ${file(./conf/config.yml):IS_TODAY_COMPETITION_SUMMARY_TWEET}
+      IMAGE_HEIGHT: 2400
+      IMAGE_WIDTH: 1800
+      LIST_COUNT: 72
+    timeout: 300
+    events:
+      - schedule:
+          rate: ${file(./conf/config.yml):TODAY_COMPETITION_SUMMARY_TWEET_SCHEDULE}
+          enabled: ${file(./conf/config.yml):ENABLE_TODAY_COMPETITION_SUMMARY_TWEET_SCHEDULE}
+          input:
+            type: today
+  ComingCompetitionSummaryTweet:
+    name: ${self:provider.environment.ComingCompetitionTweetFunctionName}
+    image:
+      name: pokemon-friendly-competition-summary-notifier
+    description: 近日中の大会一覧を画像を添えてツイートする関数
+    environment:
+      SPREAD_SHEET_KEY: ${ssm:/competition-notifier/twitter/spread-sheet-key}
+      GCP_KEY_FILE: gcp_key.json
+      TWITTER_CONSUMER_KEY: ${ssm:/competition-notifier/twitter/consumer-key}
+      TWITTER_CONSUMER_SECRET: ${ssm:/competition-notifier/twitter/consumer-secrets}
+      TWITTER_ACCESS_TOKEN: ${ssm:/competition-notifier/twitter/access-token}
+      TWITTER_ACCESS_TOKEN_SECRET: ${ssm:/competition-notifier/twitter/consumer-access-token-secrets}
+      IS_TWEET: ${file(./conf/config.yml):IS_COMING_COMPETITION_SUMMARY_TWEET}
+      IMAGE_HEIGHT: 2400
+      IMAGE_WIDTH: 1800
+      LIST_COUNT: 72
+    timeout: 300
+    events:
+      - schedule:
+          rate: ${file(./conf/config.yml):COMING_COMPETITION_SUMMARY_TWEET_SCHEDULE}
+          enabled: ${file(./conf/config.yml):ENABLE_COMING_COMPETITION_SUMMARY_TWEET_SCHEDULE}
+          input:
+            type: today

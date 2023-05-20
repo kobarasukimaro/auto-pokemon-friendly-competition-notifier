@@ -30,3 +30,60 @@ Resources:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
       BillingMode: PROVISIONED
+
+  PokemonFriendlyCompetitionSummaryNotifierECRRepository:
+    Type: 'AWS::ECR::Repository'
+    Properties:
+      RepositoryName: pokemon-friendly-competition-summary-notifier
+      ImageTagMutability: IMMUTABLE
+      ImageScanningConfiguration:
+        ScanOnPush: true
+      LifecyclePolicy:
+        LifecyclePolicyText: |
+          {
+            "rules": [
+              {
+                "rulePriority": 1,
+                "description": "Expire untagged images older than 30 days",
+                "action": {
+                  "type": "expire"
+                },
+                "selection": {
+                  "tagStatus": "untagged",
+                  "countType": "sinceImagePushed",
+                  "countUnit": "days",
+                  "countNumber": 30
+                }
+              }
+            ]
+          }
+
+  PokemonFriendlyCompetitionSummaryNotifierECRRepositoryPolicy:
+    Type: 'AWS::ECR::RepositoryPolicy'
+    Properties:
+      RepositoryName: !Ref PokemonFriendlyCompetitionSummaryNotifierECRRepository
+      PolicyText: |
+        {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:BatchGetImage",
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:PutImage",
+                "ecr:InitiateLayerUpload",
+                "ecr:UploadLayerPart",
+                "ecr:CompleteLayerUpload"
+              ],
+              "Principal": "*",
+              "Condition": {
+                "StringEquals": {
+                  "aws:PrincipalType": "AWS",
+                  "aws:SecureTransport": "true"
+                }
+              }
+            }
+          ]
+        }
