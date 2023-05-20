@@ -46,12 +46,12 @@ functions:
     handler: src/competition_notice_tweet.lambda_handler
     description: A function to tweet about each individual friendly competition.
     environment:
-      SPREAD_SHEET_KEY: ${ssm:/competition-notifier/twitter/spread-sheet-key}
-      GCP_KEY_FILE: gcp_key.json
-      TWITTER_CONSUMER_KEY: ${ssm:/competition-notifier/twitter/consumer-key}
-      TWITTER_CONSUMER_SECRET: ${ssm:/competition-notifier/twitter/consumer-secrets}
-      TWITTER_ACCESS_TOKEN: ${ssm:/competition-notifier/twitter/access-token}
-      TWITTER_ACCESS_TOKEN_SECRET: ${ssm:/competition-notifier/twitter/consumer-access-token-secrets}
+      SPREAD_SHEET_KEY_SSM_PARAM_NAME: /competition-notifier/google/spread-sheet-key
+      GCP_KEY_SSM_PARAM_NAME: /competition-notifier/google/gcp-key
+      TWITTER_CONSUMER_KEY_SSM_PARAM_NAME: /competition-notifier/twitter/consumer-key
+      TWITTER_CONSUMER_SECRET_SSM_PARAM_NAME: /competition-notifier/twitter/consumer-secrets
+      TWITTER_ACCESS_TOKEN_SSM_PARAM_NAME: /competition-notifier/twitter/access-token
+      TWITTER_ACCESS_TOKEN_SECRET_SSM_PARAM_NAME: /competition-notifier/twitter/consumer-access-token-secrets
       IS_TWEET: ${file(./conf/config.yml):IS_TWEET}
     timeout: 300
     events:

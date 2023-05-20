@@ -41,10 +41,10 @@ functions:
     handler: src/general_notice_tweet.lambda_handler
     description: A function to tweet announcements other than friendly competition.
     environment:
-      TWITTER_CONSUMER_KEY: ${ssm:/competition-notifier/twitter/consumer-key}
-      TWITTER_CONSUMER_SECRET: ${ssm:/competition-notifier/twitter/consumer-secrets}
-      TWITTER_ACCESS_TOKEN: ${ssm:/competition-notifier/twitter/access-token}
-      TWITTER_ACCESS_TOKEN_SECRET: ${ssm:/competition-notifier/twitter/consumer-access-token-secrets}
+      TWITTER_CONSUMER_KEY_SSM_PARAM_NAME: /competition-notifier/twitter/consumer-key
+      TWITTER_CONSUMER_SECRET_SSM_PARAM_NAME: /competition-notifier/twitter/consumer-secrets
+      TWITTER_ACCESS_TOKEN_SSM_PARAM_NAME: /competition-notifier/twitter/access-token
+      TWITTER_ACCESS_TOKEN_SECRET_SSM_PARAM_NAME: /competition-notifier/twitter/consumer-access-token-secrets
       IS_TWEET: ${file(./conf/config.yml):IS_TWEET}
     timeout: 300
     events:
@@ -56,10 +56,10 @@ functions:
 #    name: ${self:provider.environment.GeneralNoticeTweetFunctionName2}
 #    handler: src/general_notice_tweet2.lambda_handler
 #    environment:
-#      TWITTER_CONSUMER_KEY: ${ssm:/competition-notifier/twitter/consumer-key}
-#      TWITTER_CONSUMER_SECRET: ${ssm:/competition-notifier/twitter/consumer-secrets}
-#      TWITTER_ACCESS_TOKEN: ${ssm:/competition-notifier/twitter/access-token}
-#      TWITTER_ACCESS_TOKEN_SECRET: ${ssm:/competition-notifier/twitter/consumer-access-token-secrets}
+#      TWITTER_CONSUMER_KEY: /competition-notifier/twitter/consumer-key
+#      TWITTER_CONSUMER_SECRET: /competition-notifier/twitter/consumer-secrets
+#      TWITTER_ACCESS_TOKEN: /competition-notifier/twitter/access-token
+#      TWITTER_ACCESS_TOKEN_SECRET: /competition-notifier/twitter/consumer-access-token-secrets
 #      IS_TWEET: on
 #    timeout: 300
 #    events:

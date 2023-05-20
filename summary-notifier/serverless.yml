@@ -51,12 +51,12 @@ functions:
         - src/today_tweet.lambda_handler
     description: A function to tweet today's list of friendly competition with accompanying images.
     environment:
-      SPREAD_SHEET_KEY: ${ssm:/competition-notifier/twitter/spread-sheet-key}
-      GCP_KEY_FILE: gcp_key.json
-      TWITTER_CONSUMER_KEY: ${ssm:/competition-notifier/twitter/consumer-key}
-      TWITTER_CONSUMER_SECRET: ${ssm:/competition-notifier/twitter/consumer-secrets}
-      TWITTER_ACCESS_TOKEN: ${ssm:/competition-notifier/twitter/access-token}
-      TWITTER_ACCESS_TOKEN_SECRET: ${ssm:/competition-notifier/twitter/consumer-access-token-secrets}
+      SPREAD_SHEET_KEY_SSM_PARAM_NAME: /competition-notifier/google/spread-sheet-key
+      GCP_KEY_SSM_PARAM_NAME: /competition-notifier/google/gcp-key
+      TWITTER_CONSUMER_KEY_SSM_PARAM_NAME: /competition-notifier/twitter/consumer-key
+      TWITTER_CONSUMER_SECRET_SSM_PARAM_NAME: /competition-notifier/twitter/consumer-secrets
+      TWITTER_ACCESS_TOKEN_SSM_PARAM_NAME: /competition-notifier/twitter/access-token
+      TWITTER_ACCESS_TOKEN_SECRET_SSM_PARAM_NAME: /competition-notifier/twitter/consumer-access-token-secrets
       IS_TWEET: ${file(./conf/config.yml):IS_TODAY_COMPETITION_SUMMARY_TWEET}
       IMAGE_HEIGHT: 2400
       IMAGE_WIDTH: 1800
@@ -74,12 +74,12 @@ functions:
       name: pokemon-friendly-competition-summary-notifier
     description: A function to tweet the upcoming list of friendly competition with accompanying images.
     environment:
-      SPREAD_SHEET_KEY: ${ssm:/competition-notifier/twitter/spread-sheet-key}
-      GCP_KEY_FILE: gcp_key.json
-      TWITTER_CONSUMER_KEY: ${ssm:/competition-notifier/twitter/consumer-key}
-      TWITTER_CONSUMER_SECRET: ${ssm:/competition-notifier/twitter/consumer-secrets}
-      TWITTER_ACCESS_TOKEN: ${ssm:/competition-notifier/twitter/access-token}
-      TWITTER_ACCESS_TOKEN_SECRET: ${ssm:/competition-notifier/twitter/consumer-access-token-secrets}
+      SPREAD_SHEET_KEY_SSM_PARAM_NAME: /competition-notifier/google/spread-sheet-key
+      GCP_KEY_SSM_PARAM_NAME: /competition-notifier/google/gcp-key
+      TWITTER_CONSUMER_KEY_SSM_PARAM_NAME: /competition-notifier/twitter/consumer-key
+      TWITTER_CONSUMER_SECRET_SSM_PARAM_NAME: /competition-notifier/twitter/consumer-secrets
+      TWITTER_ACCESS_TOKEN_SSM_PARAM_NAME: /competition-notifier/twitter/access-token
+      TWITTER_ACCESS_TOKEN_SECRET_SSM_PARAM_NAME: /competition-notifier/twitter/consumer-access-token-secrets
       IS_TWEET: ${file(./conf/config.yml):IS_COMING_COMPETITION_SUMMARY_TWEET}
       IMAGE_HEIGHT: 2400
       IMAGE_WIDTH: 1800

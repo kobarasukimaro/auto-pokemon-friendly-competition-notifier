@@ -15,18 +15,30 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 pp = pprint.PrettyPrinter(indent=4)
 
-SPREAD_SHEET_KEY = os.environ["SPREAD_SHEET_KEY"]
-GCP_KEY_FILE = os.environ["GCP_KEY_FILE"]
+SPREAD_SHEET_KEY_SSM_PARAM_NAME = os.environ["SPREAD_SHEET_KEY_SSM_PARAM_NAME"]
+GCP_KEY_SSM_PARAM_NAME = os.environ["GCP_KEY_FILE_SSM_PARAM_NAME"]
+GCP_KEY_FILE_NAME = "gcp_key.json"
 
-TWITTER_CONSUMER_KEY = os.environ["TWITTER_CONSUMER_KEY"]
-TWITTER_CONSUMER_SECRET = os.environ["TWITTER_CONSUMER_SECRET"]
-TWITTER_ACCESS_TOKEN = os.environ["TWITTER_ACCESS_TOKEN"]
-TWITTER_ACCESS_TOKEN_SECRET = os.environ["TWITTER_ACCESS_TOKEN_SECRET"]
+TWITTER_CONSUMER_KEY_SSM_PARAM_NAME = os.environ["TWITTER_CONSUMER_KEY_SSM_PARAM_NAME"]
+TWITTER_CONSUMER_SECRET_SSM_PARAM_NAME = os.environ["TWITTER_CONSUMER_SECRET_SSM_PARAM_NAME"]
+TWITTER_ACCESS_TOKEN_SSM_PARAM_NAME = os.environ["TWITTER_ACCESS_TOKEN_SSM_PARAM_NAME"]
+TWITTER_ACCESS_TOKEN_SECRET_SSM_PARAM_NAME = os.environ["TWITTER_ACCESS_TOKEN_SECRET_SSM_PARAM_NAME"]
 IS_TWEET = os.environ["IS_TWEET"]
 
 def lambda_handler(event, context):
     logging.info("<event>: \n" + json.dumps(event))
-    workbook = connect_gspread(GCP_KEY_FILE, SPREAD_SHEET_KEY)
+
+    SPREAD_SHEET_KEY = get_parameter(SPREAD_SHEET_KEY_SSM_PARAM_NAME)
+    GCP_KEY = get_parameter(GCP_KEY_SSM_PARAM_NAME)
+    f = open(GCP_KEY_FILE_NAME, 'w')
+    f.write(GCP_KEY)
+    f.close()
+    TWITTER_CONSUMER_KEY = get_parameter(TWITTER_CONSUMER_KEY_SSM_PARAM_NAME)
+    TWITTER_CONSUMER_SECRET = get_parameter(TWITTER_CONSUMER_SECRET_SSM_PARAM_NAME)
+    TWITTER_ACCESS_TOKEN = get_parameter(TWITTER_ACCESS_TOKEN_SSM_PARAM_NAME)
+    TWITTER_ACCESS_TOKEN_SECRET = get_parameter(TWITTER_ACCESS_TOKEN_SECRET_SSM_PARAM_NAME)
+
+    workbook = connect_gspread(GCP_KEY_FILE_NAME, SPREAD_SHEET_KEY)
 
     # lambda url 対応
     if "queryStringParameters" in event:
@@ -180,3 +192,15 @@ def connect_gspread(jsonf, key):
 
 def get_worksheet(gc, worksheet):
     return gc.worksheet(worksheet)
+
+def get_parameter(parameter_name):
+    ssm = boto3.client('ssm')
+    response = ssm.get_parameter(
+        Name=parameter_name,
+        WithDecryption=True
+    )
+
+    # Get parameter value
+    param_value = response['Parameter']['Value']
+
+    return param_value

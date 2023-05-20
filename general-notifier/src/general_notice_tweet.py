@@ -12,16 +12,21 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 pp = pprint.PrettyPrinter(indent=4)
 
-TWITTER_CONSUMER_KEY = os.environ["TWITTER_CONSUMER_KEY"]
-TWITTER_CONSUMER_SECRET = os.environ["TWITTER_CONSUMER_SECRET"]
-TWITTER_ACCESS_TOKEN = os.environ["TWITTER_ACCESS_TOKEN"]
-TWITTER_ACCESS_TOKEN_SECRET = os.environ["TWITTER_ACCESS_TOKEN_SECRET"]
+TWITTER_CONSUMER_KEY_SSM_PARAM_NAME = os.environ["TWITTER_CONSUMER_KEY_SSM_PARAM_NAME"]
+TWITTER_CONSUMER_SECRET_SSM_PARAM_NAME = os.environ["TWITTER_CONSUMER_SECRET_SSM_PARAM_NAME"]
+TWITTER_ACCESS_TOKEN_SSM_PARAM_NAME = os.environ["TWITTER_ACCESS_TOKEN_SSM_PARAM_NAME"]
+TWITTER_ACCESS_TOKEN_SECRET_SSM_PARAM_NAME = os.environ["TWITTER_ACCESS_TOKEN_SECRET_SSM_PARAM_NAME"]
 IS_TWEET = os.environ["IS_TWEET"]
 
 def lambda_handler(event, context):
     logging.info("<event>: \n" + json.dumps(event))
 
     if IS_TWEET == "on":
+        TWITTER_CONSUMER_KEY = get_parameter(TWITTER_CONSUMER_KEY_SSM_PARAM_NAME)
+        TWITTER_CONSUMER_SECRET = get_parameter(TWITTER_CONSUMER_SECRET_SSM_PARAM_NAME)
+        TWITTER_ACCESS_TOKEN = get_parameter(TWITTER_ACCESS_TOKEN_SSM_PARAM_NAME)
+        TWITTER_ACCESS_TOKEN_SECRET = get_parameter(TWITTER_ACCESS_TOKEN_SECRET_SSM_PARAM_NAME)
+
         # Twitterオブジェクトの生成
         auth = tweepy.OAuthHandler(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET)
         auth.set_access_token(TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET)
@@ -51,3 +56,15 @@ def lambda_handler(event, context):
         if parse_tweet(tweet_contents).asdict()["valid"] == True:
             result = api.update_status(status = tweet_contents)
             logging.info(result)
+
+def get_parameter(parameter_name):
+    ssm = boto3.client('ssm')
+    response = ssm.get_parameter(
+        Name=parameter_name,
+        WithDecryption=True
+    )
+
+    # Get parameter value
+    param_value = response['Parameter']['Value']
+
+    return param_value

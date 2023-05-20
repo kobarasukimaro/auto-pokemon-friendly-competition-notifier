@@ -20,13 +20,14 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 pp = pprint.PrettyPrinter(indent=4)
 
-SPREAD_SHEET_KEY = os.environ["SPREAD_SHEET_KEY"]
-GCP_KEY_FILE = os.environ["GCP_KEY_FILE"]
+SPREAD_SHEET_KEY_SSM_PARAM_NAME = os.environ["SPREAD_SHEET_KEY_SSM_PARAM_NAME"]
+GCP_KEY_SSM_PARAM_NAME = os.environ["GCP_KEY_SSM_PARAM_NAME"]
+GCP_KEY_FILE_NAME = "gcp_key.json"
 
-TWITTER_CONSUMER_KEY = os.environ["TWITTER_CONSUMER_KEY"]
-TWITTER_CONSUMER_SECRET = os.environ["TWITTER_CONSUMER_SECRET"]
-TWITTER_ACCESS_TOKEN = os.environ["TWITTER_ACCESS_TOKEN"]
-TWITTER_ACCESS_TOKEN_SECRET = os.environ["TWITTER_ACCESS_TOKEN_SECRET"]
+TWITTER_CONSUMER_KEY_SSM_PARAM_NAME = os.environ["TWITTER_CONSUMER_KEY_SSM_PARAM_NAME"]
+TWITTER_CONSUMER_SECRET_SSM_PARAM_NAME = os.environ["TWITTER_CONSUMER_SECRET_SSM_PARAM_NAME"]
+TWITTER_ACCESS_TOKEN_SSM_PARAM_NAME = os.environ["TWITTER_ACCESS_TOKEN_SSM_PARAM_NAME"]
+TWITTER_ACCESS_TOKEN_SECRET_SSM_PARAM_NAME = os.environ["TWITTER_ACCESS_TOKEN_SECRET_SSM_PARAM_NAME"]
 IMAGE_WIDTH = os.environ["IMAGE_WIDTH"]
 IMAGE_HEIGHT = int(os.environ["IMAGE_HEIGHT"])
 LIST_COUNT = int(os.environ["LIST_COUNT"])
@@ -34,7 +35,18 @@ IS_TWEET = os.environ["IS_TWEET"]
 
 def lambda_handler(event, context):
     logging.info("<event>: \n" + json.dumps(event))
-    workbook = connect_gspread(GCP_KEY_FILE, SPREAD_SHEET_KEY)
+
+    SPREAD_SHEET_KEY = get_parameter(SPREAD_SHEET_KEY_SSM_PARAM_NAME)
+    GCP_KEY = get_parameter(GCP_KEY_FILE_SSM_PARAM_NAME)
+    f = open(GCP_KEY_FILE_NAME, 'w')
+    f.write(GCP_KEY)
+    f.close()
+    TWITTER_CONSUMER_KEY = get_parameter(TWITTER_CONSUMER_KEY_SSM_PARAM_NAME)
+    TWITTER_CONSUMER_SECRET = get_parameter(TWITTER_CONSUMER_SECRET_SSM_PARAM_NAME)
+    TWITTER_ACCESS_TOKEN = get_parameter(TWITTER_ACCESS_TOKEN_SSM_PARAM_NAME)
+    TWITTER_ACCESS_TOKEN_SECRET = get_parameter(TWITTER_ACCESS_TOKEN_SECRET_SSM_PARAM_NAME)
+
+    workbook = connect_gspread(GCP_KEY_FILE_NAME, SPREAD_SHEET_KEY)
     logging.info(workbook.lastUpdateTime)
 
     # lambda url 対応 
@@ -119,8 +131,8 @@ def lambda_handler(event, context):
 
         if compe_count <= 0:
              logging.warn("お知らせする情報がありません")
-            #  if IS_TWEET == "on":
-            #     result = api.update_status(status = "{} 本日お知らせする仲間大会の情報はありません".format(notice_day.strftime("%m/%d")))
+             if IS_TWEET == "on":
+                result = api.update_status(status = "{} 本日お知らせする仲間大会の情報はありません".format(notice_day.strftime("%m/%d")))
              return
 
 
