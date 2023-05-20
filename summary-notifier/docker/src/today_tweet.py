@@ -306,3 +306,15 @@ def connect_gspread(jsonf, key):
 
 def get_worksheet(gc, worksheet):
     return gc.worksheet(worksheet)
+
+def get_parameter(parameter_name):
+    ssm = boto3.client('ssm')
+    response = ssm.get_parameter(
+        Name=parameter_name,
+        WithDecryption=True
+    )
+
+    # Get parameter value
+    param_value = response['Parameter']['Value']
+
+    return param_value
