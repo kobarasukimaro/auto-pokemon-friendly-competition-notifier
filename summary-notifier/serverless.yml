@@ -47,6 +47,8 @@ functions:
     name: ${self:provider.environment.TodayCompetitionSummaryTweetFunctionName}
     image:
       name: pokemon-friendly-competition-summary-notifier
+      command:
+        - src/today_tweet.lambda_handler
     description: 今日の大会一覧を画像を添えてツイートする関数
     environment:
       SPREAD_SHEET_KEY: ${ssm:/competition-notifier/twitter/spread-sheet-key}
