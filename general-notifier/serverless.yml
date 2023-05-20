@@ -47,6 +47,21 @@ functions:
       IS_TWEET: on
     timeout: 300
     events:
-      - schedule: 
-          rate: cron(45 3 ? JUL-NOV SAT 2022)
-          enabled: true
+      - schedule:
+          rate: ${file(./conf/config.yml):WEEK_NOTICE_TWEET_SCHEDULE}
+          enabled: ${file(./conf/config.yml):ENABLE_WEEK_NOTICE_TWEET_SCHEDULE}
+# ツイートの種類を増やしたい場合はfunctionを追加
+#  weeklyNoticeTweet2:
+#    name: ${self:provider.environment.WeeklyNoticeTweetFunctionName2}
+#    handler: src/weekly_notice_tweet2.lambda_handler
+#    environment:
+#      TWITTER_CONSUMER_KEY: ${ssm:/competition-notifier/twitter/consumer-key}
+#      TWITTER_CONSUMER_SECRET: ${ssm:/competition-notifier/twitter/consumer-secrets}
+#      TWITTER_ACCESS_TOKEN: ${ssm:/competition-notifier/twitter/access-token}
+#      TWITTER_ACCESS_TOKEN_SECRET: ${ssm:/competition-notifier/twitter/consumer-access-token-secrets}
+#      IS_TWEET: on
+#    timeout: 300
+#    events:
+#      - schedule:
+#          rate: ${file(./conf/config.yml):WEEK_NOTICE_TWEET_SCHEDULE2}
+#          enabled: ${file(./conf/config.yml):ENABLE_WEEK_NOTICE_TWEET_SCHEDULE2}

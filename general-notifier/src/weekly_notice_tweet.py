@@ -27,6 +27,7 @@ def lambda_handler(event, context):
         auth.set_access_token(TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET)
         api = tweepy.API(auth)
 
+        # ツイート内容変更はここを修正する
         tweet_contents = textwrap.dedent('''\
         [定期ツイート]
         仲間大会参加準備はお済みですか❓
