@@ -44,6 +44,7 @@ functions:
   competitionNoticeTweet:
     name: ${self:provider.environment.CompetitionNoticeTweetFunctionName}
     handler: src/competition_notice_tweet.lambda_handler
+    description: A function to tweet about each individual friendly competition.
     environment:
       SPREAD_SHEET_KEY: ${ssm:/competition-notifier/twitter/spread-sheet-key}
       GCP_KEY_FILE: gcp_key.json

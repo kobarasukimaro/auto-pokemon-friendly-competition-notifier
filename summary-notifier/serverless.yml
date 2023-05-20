@@ -49,7 +49,7 @@ functions:
       name: pokemon-friendly-competition-summary-notifier
       command:
         - src/today_tweet.lambda_handler
-    description: 今日の大会一覧を画像を添えてツイートする関数
+    description: A function to tweet today's list of friendly competition with accompanying images.
     environment:
       SPREAD_SHEET_KEY: ${ssm:/competition-notifier/twitter/spread-sheet-key}
       GCP_KEY_FILE: gcp_key.json
@@ -72,7 +72,7 @@ functions:
     name: ${self:provider.environment.ComingCompetitionTweetFunctionName}
     image:
       name: pokemon-friendly-competition-summary-notifier
-    description: 近日中の大会一覧を画像を添えてツイートする関数
+    description: A function to tweet the upcoming list of friendly competition with accompanying images.
     environment:
       SPREAD_SHEET_KEY: ${ssm:/competition-notifier/twitter/spread-sheet-key}
       GCP_KEY_FILE: gcp_key.json

@@ -39,6 +39,7 @@ functions:
   generalNoticeTweet:
     name: ${self:provider.environment.GeneralNoticeTweetFunctionName}
     handler: src/general_notice_tweet.lambda_handler
+    description: A function to tweet announcements other than friendly competition.
     environment:
       TWITTER_CONSUMER_KEY: ${ssm:/competition-notifier/twitter/consumer-key}
       TWITTER_CONSUMER_SECRET: ${ssm:/competition-notifier/twitter/consumer-secrets}
