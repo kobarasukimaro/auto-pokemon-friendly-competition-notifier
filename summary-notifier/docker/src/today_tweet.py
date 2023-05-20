@@ -37,7 +37,7 @@ def lambda_handler(event, context):
     logging.info("<event>: \n" + json.dumps(event))
 
     SPREAD_SHEET_KEY = get_parameter(SPREAD_SHEET_KEY_SSM_PARAM_NAME)
-    GCP_KEY = get_parameter(GCP_KEY_FILE_SSM_PARAM_NAME)
+    GCP_KEY = get_parameter(GCP_KEY_SSM_PARAM_NAME)
     f = open(GCP_KEY_FILE_NAME, 'w')
     f.write(GCP_KEY)
     f.close()
