@@ -11,7 +11,7 @@ AWS Lambda automatically reads information about the Friendly Competition manage
 
 # Required services
 - AWS account
-- Google Spreadsheet
+- GCP account
 - Twitter account (requires registration on Developer Portal)
 - GitHub account
 
@@ -46,7 +46,7 @@ Googleスプレッドシートで管理している仲間大会の情報をAWS L
 
 # 必要なサービス
 - AWS アカウント
-- Google スプレッドシート
+- GCP アカウント
 - Twitter アカウント（要 Developer Portal 登録）
 - GitHub アカウント
 
