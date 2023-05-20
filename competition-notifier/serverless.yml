@@ -1,0 +1,66 @@
+service: competition-notice-tweet
+
+provider:
+  name: aws
+  runtime: python3.8
+  region: ap-northeast-1
+  memorySize: 256
+  logRetentionInDays: 30
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:*"
+      Resource:
+        - "*"
+    - Effect: "Allow"
+      Action:
+        - "kms:Decrypt"
+      Resource:
+        - "*"
+    - Effect: "Allow"
+      Action:
+        - "ssm:GetParameter"
+        - "ssm:GetParameters"
+        - "ssm:GetParametersByPath"
+      Resource:
+        - "arn:aws:ssm:${aws:region}:${aws:accountId}:parameter/competition-notifier/twitter/*"
+
+  environment:
+    CompetitionNoticeTweetFunctionName: competition-notice-tweet
+
+packages:
+  exclude:
+    - node_modules/**
+
+plugins:
+  - serverless-prune-plugin
+  
+custom:
+  prune:
+    automatic: true
+    number: 10
+
+functions:
+  competitionNoticeTweet:
+    name: ${self:provider.environment.CompetitionNoticeTweetFunctionName}
+    handler: src/competition_notice_tweet.lambda_handler
+    environment:
+      SPREAD_SHEET_KEY: ${ssm:/competition-notifier/twitter/spread-sheet-key}
+      GCP_KEY_FILE: gcp_key.json
+      TWITTER_CONSUMER_KEY: ${ssm:/competition-notifier/twitter/consumer-key}
+      TWITTER_CONSUMER_SECRET: ${ssm:/competition-notifier/twitter/consumer-secrets}
+      TWITTER_ACCESS_TOKEN: ${ssm:/competition-notifier/twitter/access-token}
+      TWITTER_ACCESS_TOKEN_SECRET: ${ssm:/competition-notifier/twitter/consumer-access-token-secrets}
+      IS_TWEET: ${file(./conf/config.yml):IS_TWEET}
+    timeout: 300
+    events:
+      - schedule:
+          rate: ${file(./conf/config.yml):COMPETITION_NOTICE_TWEET_SCHEDULE}
+          enabled: ${file(./conf/config.yml):ENABLE_COMPETITION_NOTICE_TWEET_SCHEDULE}
+          input:
+            type: tweet
+      - schedule:
+          rate: ${file(./conf/config.yml):COMPETITION_NOTICE_RETWEET_SCHEDULE}
+          enabled: ${file(./conf/config.yml):ENABLE_COMPETITION_NOTICE_RETWEET_SCHEDULE}
+          input:
+            type: retweet
