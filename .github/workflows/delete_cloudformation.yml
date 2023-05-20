@@ -2,6 +2,14 @@ name: Delete CloudFormation
 
 on:
   workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'delete ok?'
+        required: true
+        type: choice
+        options:
+          - "no"
+          - "yes"
 
 jobs:
   deploy-cfn:
