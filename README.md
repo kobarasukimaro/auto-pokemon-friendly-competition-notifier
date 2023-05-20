@@ -5,6 +5,8 @@
 
 # このリポジトリの内容でできること
 Googleスプレッドシートで管理している仲間大会の情報をAWS Lambdaが自動的に読み取りwitterに投稿します。
+以下のようなツイートを内容となります。
+
 ![スクリーンショット 2023-05-20 20 01 57](https://github.com/kobarasukimaro/auto-pokemon-friendly-competition-notifier/assets/17419944/a91d4b00-6da6-4868-899a-6b0d8bea30ea)
 
 ![スクリーンショット 2023-05-20 20 02 33](https://github.com/kobarasukimaro/auto-pokemon-friendly-competition-notifier/assets/17419944/95103dbe-6c05-43aa-ba78-2cba16a22514)
