@@ -1,4 +1,4 @@
-service: competition-notice-tweet
+service: summary-notice-tweet
 
 provider:
   name: aws
