@@ -2,13 +2,14 @@ name: Remove weekly notice tweet
 
 on:
   workflow_dispatch:
-    confirm:
-      description: 'remove ok?'
-      required: true
-      type: choice
-      options:
-        - "no"
-        - "yes"
+    inputs:
+      confirm:
+        description: 'remove ok?'
+        required: true
+        type: choice
+        options:
+          - "no"
+          - "yes"
 
 
 jobs:
