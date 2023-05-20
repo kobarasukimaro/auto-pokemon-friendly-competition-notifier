@@ -53,11 +53,23 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
-    - name: Install Plugin and Deploy
-      uses: serverless/github-action@v3.2
+#    - name: Install Plugin and Deploy
+#      uses: serverless/github-action@v3.2
+#      with:
+#        args: -c "cd ./summary-notifier && serverless plugin install --name serverless-prune-plugin@${{ matrix.sls-prune-plugin-version }} && serverless deploy"
+#        entrypoint: /bin/sh
+#      env:
+#        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    - name: Use Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
       with:
-        args: -c "cd ./summary-notifier && serverless plugin install --name serverless-prune-plugin@${{ matrix.sls-prune-plugin-version }} && serverless deploy"
-        entrypoint: /bin/sh
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        python-version: ${{ matrix.python-version }}
+        architecture: 'x64'
+
+    - name: install serverless
+      run: npm i -g serverless
+
+    - name: severless deploy
+      run: serverless plugin install --name serverless-prune-plugin@${{ matrix.sls-prune-plugin-version }} && serverless deploy --verbose --force
