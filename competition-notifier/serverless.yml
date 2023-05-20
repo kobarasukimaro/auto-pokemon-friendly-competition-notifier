@@ -24,6 +24,7 @@ provider:
         - "ssm:GetParametersByPath"
       Resource:
         - "arn:aws:ssm:${aws:region}:${aws:accountId}:parameter/competition-notifier/twitter/*"
+        - "arn:aws:ssm:${aws:region}:${aws:accountId}:parameter/competition-notifier/google/*"
 
   environment:
     CompetitionNoticeTweetFunctionName: competition-notice-tweet
