@@ -1,2 +1,3 @@
 tweepy==3.10.0
 twitter-text-parser==2.0.0
+oauth2client==4.1.3
