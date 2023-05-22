@@ -41,9 +41,7 @@ Register information that would be harmful if leaked outside the application in 
 | ---- | ---- |
 | `/competition-notifier/twitter/consumer-key`  |  `Consumer Key` registered in `Create an app on Twitter Developer Portal`  |
 | `/competition-notifier/twitter/consumer-secrets`  |  `Consumer Key Secret` registered in `Create an app on Twitter Developer Portal`  |
-| `/competition-notifier/twitter/access-token` 
-
- |  `Access Token` registered in `Create an app on Twitter Developer Portal`  |
+| `/competition-notifier/twitter/access-token` |  `Access Token` registered in `Create an app on Twitter Developer Portal`  |
 | `/competition-notifier/twitter/consumer-access-token-secrets`  |  `Access Token Secret` registered in `Create an app on Twitter Developer Portal`  |
 | `/competition-notifier/google/spread-sheet-key`  |  `SpreadsheetID` checked in `Create a Google Spreadsheet for the Friendly Competition`  |
 | `/competition-notifier/google/gcp-key`  |  Contents of `service account key` (JSON file) created in `Make the Friendly Competition Spreadsheet Accessible from the Program`  |
