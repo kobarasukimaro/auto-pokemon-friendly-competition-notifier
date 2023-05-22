@@ -22,6 +22,9 @@ AWS Lambda automatically reads information about the Friendly Competition manage
 Details will be posted on each page. Be sure to start by preparing the [common-resources](https://github.com/kobarasukimaro/auto-pokemon-friendly-competition-notifier/tree/main/common-resources).
 
 - Build [common-resources](https://github.com/kobarasukimaro/auto-pokemon-friendly-competition-notifier/tree/main/common-resources)
+
+Below are the functions to be tweeted. Please build only what you need for each.
+
 - Build [general-notifier](https://github.com/kobarasukimaro/auto-pokemon-friendly-competition-notifier/tree/main/general-notifier)
 - Build [competition-notifier](https://github.com/kobarasukimaro/auto-pokemon-friendly-competition-notifier/tree/main/competition-notifier)
 - Build [summary-notifier](https://github.com/kobarasukimaro/auto-pokemon-friendly-competition-notifier/tree/main/summary-notifier)
@@ -58,6 +61,9 @@ Googleスプレッドシートで管理している仲間大会の情報をAWS L
 必ず始めに [common-resources](https://github.com/kobarasukimaro/auto-pokemon-friendly-competition-notifier/tree/main/common-resources) の準備を行ってください
 
 - [common-resources](https://github.com/kobarasukimaro/auto-pokemon-friendly-competition-notifier/tree/main/common-resources) の構築
+
+以下はツイートする機能になります。それぞれ必要なものだけ構築してください。
+
 - [general-notifier](https://github.com/kobarasukimaro/auto-pokemon-friendly-competition-notifier/tree/main/general-notifier) の構築
 - [competition-notifier](https://github.com/kobarasukimaro/auto-pokemon-friendly-competition-notifier/tree/main/competition-notifier) の構築
 - [summary-notifier](https://github.com/kobarasukimaro/auto-pokemon-friendly-competition-notifier/tree/main/summary-notifier) の構築
