@@ -1,4 +1,3 @@
----
 # About competition-notifier
 
 ## The role of this feature
