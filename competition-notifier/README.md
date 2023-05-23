@@ -39,6 +39,7 @@ EventBridgeで定期的にLambdaを実行します。Lambdaの中では[こち�
 仲間大会の情報はGoogleスプレッドシートから取得し、状態を DynamoDB に保存します。
 
 以前noteに貼ったものを持ってきました
+
 ![image](https://github.com/kobarasukimaro/auto-pokemon-friendly-competition-notifier/assets/17419944/04fcd5a0-0c41-45a9-b982-ce91ffb07302)
 
 ## コードの構成
